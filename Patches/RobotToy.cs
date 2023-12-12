@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using HarmonyLib;
+using UnityEngine;
 
 namespace Maxwell.Patches
 {
@@ -12,9 +13,26 @@ namespace Maxwell.Patches
         [HarmonyPrefix]
         static void Prefix(AnimatedItem __instance)
         {
-            if (__instance.grabAudio.name == AudioLoad.Clip.name)
-                return;
-            __instance.grabAudio = AudioLoad.Clip;
+            if (__instance.grabAudio.name != AudioLoad.Clip.name)
+            {
+                if (__instance.grabAudio.name == "RobotToyCheer")
+                {
+                    Plugin.LogInfo($"Set robot audio to maxwell");
+                    __instance.grabAudio = AudioLoad.Clip;
+                }
+            }
+            /*
+            if (((Component)(object)__instance).gameObject.GetComponent<MeshFilter>().mesh == __instance.alternateMesh)
+            {
+                Plugin.LogInfo($"Item is alt mesh. Audio name: {__instance.dropAudio.name}");
+            }
+            else if (__instance.grabAudio.name == AudioLoad.Clip.name)
+            {
+                Plugin.LogInfo($"{__instance.grabAudio.name} already {AudioLoad.Clip.name}");
+            }
+            else 
+                __instance.grabAudio = AudioLoad.Clip;
+            */
         }
     }
 }
