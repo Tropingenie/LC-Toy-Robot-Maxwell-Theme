@@ -13,13 +13,21 @@ namespace Maxwell.Patches
         [HarmonyPrefix]
         static void Prefix(AnimatedItem __instance)
         {
-            if (__instance.grabAudio.name != AudioLoad.Clip.name)
+            try
             {
-                if (__instance.grabAudio.name == "RobotToyCheer")
+                if (__instance.grabAudio.name != AudioLoad.Clip.name || __instance.grabAudio != null)
                 {
-                    Plugin.LogInfo($"Set robot audio to maxwell");
-                    __instance.grabAudio = AudioLoad.Clip;
+                    if (__instance.grabAudio.name == "RobotToyCheer")
+                    {
+                        Plugin.LogInfo($"Set robot audio to maxwell");
+                        __instance.grabAudio = AudioLoad.Clip;
+                    }
+
                 }
+            }
+            catch (Exception ex)
+            {
+                Plugin.LogError($"{ex.Message}\n{ex.StackTrace}");
             }
             /*
             if (((Component)(object)__instance).gameObject.GetComponent<MeshFilter>().mesh == __instance.alternateMesh)
