@@ -13,11 +13,11 @@ namespace Maxwell.Patches
     {
         static bool FirstRun = true;
 
-        static readonly List<string> FilePaths = new List<string>(
-                                            [Path.Combine(Paths.PluginPath, "RobotToySound", "maxwell.wav"),
-                                            Path.Combine(Paths.PluginPath, "Oni_Hazza-ToyRobot_MaxwellTheme",
-                                                        "RobotToySound", "maxwell.wav")]
-                                            );
+        static readonly List<string> FilePaths = new()
+        { 
+            Path.Combine(Paths.PluginPath, "RobotToySound", "maxwell.wav"),
+            Path.Combine(Paths.PluginPath, "Oni_Hazza-ToyRobot_MaxwellTheme", "RobotToySound", "maxwell.wav")
+        };
 
         static string FilePath = null;
 
@@ -37,7 +37,7 @@ namespace Maxwell.Patches
                 {
                     if (File.Exists(p))
                     {
-                        Plugin.LogInfo($"File {p} found")
+                        Plugin.LogInfo($"File {p} found");
                         FilePath = p;
                         FileFound = true;
                         break;
