@@ -13,13 +13,19 @@ namespace Maxwell.Patches
     {
         static bool FirstRun = true;
 
-        static readonly string FilePath = Path.Combine(Paths.PluginPath, "RobotToySound", "maxwell.wav");
+        static readonly List<string> FilePaths = new List<string>(
+                                            [Path.Combine(Paths.PluginPath, "RobotToySound", "maxwell.wav"),
+                                            Path.Combine(Paths.PluginPath, "Oni_Hazza-ToyRobot_MaxwellTheme",
+                                                        "RobotToySound", "maxwell.wav")]
+                                            );
+
+        static string FilePath = null;
 
         public static AudioClip Clip = null;
 
         public static bool FinishedLoading = false;
 
-        public static bool FileFound = true;
+        public static bool FileFound = false;
 
         public static void Load()
         {
@@ -27,12 +33,19 @@ namespace Maxwell.Patches
             {
                 FirstRun = false;
 
-                if (!File.Exists(FilePath)) // Clip will remain null here
+                foreach (string p in FilePaths)
                 {
-                    FileFound = false;
-                    Plugin.LogError($"File {FilePath} not found");
-                    return;
+                    if (File.Exists(p))
+                    {
+                        Plugin.LogInfo($"File {p} found")
+                        FilePath = p;
+                        FileFound = true;
+                        break;
+                    }
+                    else Plugin.LogError($"File {p} not found");
                 }
+
+                if (!FileFound) return; // Clip will remain null here
 
                 SharedCoroutineStarter.StartCoroutine(LoadAudioClip(FilePath));
             }
