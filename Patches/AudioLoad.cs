@@ -14,9 +14,10 @@ namespace Maxwell.Patches
         static bool FirstRun = true;
 
         static readonly List<string> FilePaths = new()
-        { 
+        {
             Path.Combine(Paths.PluginPath, "RobotToySound", "maxwell.wav"),
-            Path.Combine(Paths.PluginPath, "Oni_Hazza-ToyRobot_MaxwellTheme", "RobotToySound", "maxwell.wav")
+            Path.Combine(Paths.PluginPath, "Oni_Hazza-ToyRobot_MaxwellTheme", "RobotToySound", "maxwell.wav"),
+            Path.Combine(Paths.PluginPath, "Oni_Hazza-ToyRobot_MaxwellTheme", "maxwell.wav")
         };
 
         static string FilePath = null;
