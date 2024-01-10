@@ -42,10 +42,14 @@ namespace Maxwell.Patches
                         FileFound = true;
                         break;
                     }
-                    else Plugin.LogError($"File {p} not found");
+                    else Plugin.LogWarning($"File {p} not found");
                 }
 
-                if (!FileFound) return; // Clip will remain null here
+                if (!FileFound)
+                {
+                    Plugin.LogError("File maxwell.wav not found!");
+                    return; // Clip will remain null here
+                }
 
                 SharedCoroutineStarter.StartCoroutine(LoadAudioClip(FilePath));
             }
